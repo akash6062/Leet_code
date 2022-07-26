@@ -1,0 +1,35 @@
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& v) {
+        vector<vector<int>> ans;
+        map<vector<int>,int> M;
+        int N = v.size();
+        sort(v.begin(),v.end());
+        for(int i = 0 ; i < N - 2 ; i++){
+            if(i == 0 or v[i] != v[i-1]){
+                int left = i + 1;
+                int right = N - 1;
+                while(left < right){
+                    int Sum = v[i] + v[right] + v[left];
+                    if(Sum == 0){
+                        vector<int> a;
+                        a.push_back(v[i]);
+                        a.push_back(v[left]);
+                        a.push_back(v[right]);
+                        if(M.count(a) == 0){
+                            ans.push_back(a);
+                            M[a] = 1;
+                        }
+                        
+                    }
+                    if(Sum > 0){
+                        right --;
+                    }
+                    else{
+                        left ++;
+                    }
+                }
+            }
+        }
+        return ans;
+    }

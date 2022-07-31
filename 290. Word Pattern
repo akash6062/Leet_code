@@ -1,0 +1,36 @@
+class Solution {
+public:
+    bool wordPattern(string pattern, string s) {
+        
+        int pSize = (int)pattern.size();
+        int sSize = (int)s.size();
+        istringstream ss(s);
+        vector<string> saveVector;
+        string stringBuffer;
+        
+        unordered_map<char, string> hashmap;
+        unordered_map<string, char> twohashmap;
+        
+        
+        while (getline(ss, stringBuffer, ' '))
+        {
+            saveVector.push_back(stringBuffer);
+        }
+ 
+        if (pSize != saveVector.size())
+            return false;
+        for (int i = 0; i < pSize; i++)
+        {
+            if ((hashmap.count(pattern[i]) == 0) && (twohashmap.count(saveVector[i]) == 0))
+            {
+                hashmap[pattern[i]] = saveVector[i];
+                twohashmap[saveVector[i]] = pattern[i];
+            }
+            else
+                if ((hashmap[pattern[i]] != saveVector[i]) && (twohashmap[saveVector[i]] != pattern[i]))
+                    return false;
+        }
+ 
+        return true;
+    }
+};

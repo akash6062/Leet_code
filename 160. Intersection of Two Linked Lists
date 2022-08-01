@@ -1,0 +1,21 @@
+class Solution {
+public:
+    int len(ListNode* p) {
+        int x = 0;
+        while (p) { p = p->next; ++x; }
+        return x;
+    }
+
+    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+        int z = len(headA) - len(headB);
+        while (z > 0) { headA = headA->next; --z; }
+        while (z < 0) { headB = headB->next; ++z; }
+
+        while (headA && headB && headA != headB) {
+            headA = headA->next;
+            headB = headB->next;
+        }
+
+        return headA;
+    }
+};

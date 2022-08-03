@@ -1,0 +1,22 @@
+class Solution {
+public:
+    void visit(TreeNode* root, int& depth, int& max_depth, vector<int>& results) {
+        if (!root) return;
+        if (depth > max_depth) {
+            results.push_back(root->val);
+            max_depth++;
+        }
+        depth++;
+        visit(root->right, depth, max_depth, results);
+        visit(root->left, depth, max_depth, results);
+        depth--;
+        
+    }
+    vector<int> rightSideView(TreeNode* root) {
+        vector<int> results;
+        int max_depth = 0;
+        int depth = 1;
+        visit(root, depth, max_depth, results);
+        return results;
+    }
+};

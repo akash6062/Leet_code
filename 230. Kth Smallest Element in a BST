@@ -1,0 +1,16 @@
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        stack<int>s;
+        reversedInOrder(root, s);
+        while(--k) s.pop();
+        return s.top();
+    }
+    
+    void reversedInOrder(TreeNode* root, stack<int>& s){
+        if(!root) return;
+        reversedInOrder(root->right, s);
+        s.push(root->val);
+        reversedInOrder(root->left, s);
+    }
+};

@@ -1,0 +1,38 @@
+class BSTIterator {
+public:
+    BSTIterator(TreeNode* root) : pos_(-1) {
+        traverseLeft(root);
+    }
+    
+    bool hasNext() {
+        return pos_ + 1 != size(vals_) || !empty(stk_);
+    }
+    
+    int next() {
+        if (++pos_ == size(vals_)) {
+            TreeNode *node = stk_.back(); stk_.pop_back();
+            traverseLeft(node->right);
+            vals_.emplace_back(node->val);
+        }
+        return vals_[pos_];
+    }
+    
+    bool hasPrev() {
+        return pos_ - 1 >= 0;
+    }
+    
+    int prev() {
+        return vals_[--pos_];
+    }
+
+private:
+    void traverseLeft(TreeNode *node) {
+        for (; node != nullptr; node = node->left) {
+            stk_.emplace_back(node);
+        }
+    }
+    
+    vector<TreeNode *> stk_;
+    vector<int> vals_;
+    int pos_;
+};

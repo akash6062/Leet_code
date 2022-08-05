@@ -1,0 +1,23 @@
+class Solution {
+public:
+    int findJudge(int N, vector<vector<int>>& trust) {
+        vector<int> pid(N+1, -1);
+        vector<int> numt(N+1, 0);
+        
+        for (auto v: trust)
+        {
+            pid[v[0]] = 0;
+            numt[v[1]] += 1;
+        }
+        
+        for (int i=1; i<=N; i++)
+        {
+            if (pid[i] == 0)
+                continue;
+            if (numt[i] == N-1)
+                return i;
+        }
+        
+        return -1;
+    }
+};

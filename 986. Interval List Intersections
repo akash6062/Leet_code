@@ -1,0 +1,21 @@
+class Solution { // (SFO) 22.07.27
+public:
+    vector<vector<int>> intervalIntersection(
+        vector<vector<int>>& firstList, vector<vector<int>>& secondList) {
+        // Each list of intervals is pairwise disjoint and in sorted order
+        // std::sort(firstList.begin(), firstList.end());
+        // std::sort(secondList.begin(), secondList.end());
+        // It has been sorted. No need to sort again!
+        vector<vector<int>> res;
+        int ptr1 = 0, ptr2 = 0;
+        while( ptr1 < firstList.size() && ptr2 < secondList.size() ){
+            int left_bound = max(firstList[ptr1][0], secondList[ptr2][0]);
+            int right_bound = min(firstList[ptr1][1], secondList[ptr2][1]);
+            if( left_bound <= right_bound ) 
+                res.push_back({left_bound, right_bound});
+            // firstList[ptr1][1] < secondList[ptr2][1] ? ptr1++ : ptr2++;
+            ptr1 = firstList[ptr1][1] == right_bound ? ptr1 + 1 : ptr1;
+            ptr2 = secondList[ptr2][1] == right_bound ? ptr2 + 1 : ptr2;
+        } return res;
+    }
+};

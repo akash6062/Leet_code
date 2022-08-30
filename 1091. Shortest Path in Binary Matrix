@@ -1,0 +1,49 @@
+using namespace std;
+using pii = pair<int, int>;
+using ll = long long;
+using namespace std;
+#define each(i, n) for (int i = 0; i <= int(n); ++i) // [0, n)
+#define fori(n) for (int i = 0; i <= int(n); ++i)    // [0, n)
+#include <cassert>
+#define mp make_pair
+#define dsize(v) (int)v.size()
+template <class K, class V> bool exist(unordered_map<K, V> &m, K key) {
+  return m.find(key) != m.end();
+}
+int direction[8][2] = {{-1, 0},  {1, 0},  {0, -1}, {0, 1},
+                       {-1, -1}, {-1, 1}, {1, -1}, {1, 1}};
+
+class Solution {
+public:
+  int shortestPathBinaryMatrix(vector<vector<int>> &g) {
+    int n = dsize(g);
+    if (g[0][0] == 1 || g[n - 1][n - 1] == 1)
+      return -1;
+    if (n == 1)
+      return 1;
+    queue<pii> q;
+    q.push(mp(0, 0));
+    g[0][0] = 1;
+    while (!q.empty()) {
+      auto p = q.front();
+      q.pop();
+      each(i, 7) {
+        int x = direction[i][0] + p.first, y = direction[i][1] + p.second;
+        if (x < 0 || x >= n || y < 0 || y >= n || g[x][y] != 0)
+          continue;
+
+        g[x][y] = g[p.first][p.second] + 1;
+        q.push(mp(x, y));
+        if (x == n - 1 && y == n - 1)
+          return g[x][y];
+      }
+    }
+    return -1;
+  }
+};
+
+static const int _ = []() {
+  ios::sync_with_stdio(false);
+  cin.tie(NULL);
+  return 0;
+}();
